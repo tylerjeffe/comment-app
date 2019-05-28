@@ -1,0 +1,19 @@
+html {
+    position: relative;
+}
+
+body {
+    margin-bottom: 80px;
+   
+}
+
+.jumbotron {
+    background: forestgreen;
+    color: yellow;
+    background-image: url("../images/timbersarmy.jpg");
+    background-size: 100%;
+    size: 200%;
+}
+
+.navbar{
+}
