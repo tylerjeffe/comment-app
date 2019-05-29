@@ -1,7 +1,9 @@
 $(document).ready(function() {
+  
   let articleContainer = $(".article-container");
+  
   $(document).on("click", ".btn.save", handleArticleSave);
-  $(document).on("click", ".scrape-new", handleArticleScrape);
+  $(document).on("click", ".scrape-new", handleArticleScrape, console.log("scrape?"));
 
   initPage();
 
@@ -15,6 +17,16 @@ $(document).ready(function() {
       }
     });
   }
+
+  function renderArticles(articles) {
+    articlePanels = [];
+
+    for (var i; i < articles.length; i++) {
+      articlePanels.push(createPanel(articles[i]));
+    }
+    articleContainer.append(articlePanels);
+  }
+
 
   function createPanel(article) {
     let panel = $(
@@ -59,15 +71,24 @@ $(document).ready(function() {
     articleContainer.append(emptyAlert);
   }
 
-  function renderArticles(articles) {
-    articlePanels = [];
+  function handleArticleSave() {
+    let articleToSave = $(this)
+      .parents(".panel")
+      .data();
+    articleToSave.saved = true;
 
-    for (var i; i < articles.length; i++) {
-      articlePanels.push(createPanel(articles[i]));
-    }
-    articleContainer.append(articlePanels);
+    $.ajax({
+      method: "PATCH",
+      url: "/api/headlines",
+      data: articleToSave
+    }).then(function(data) {
+      if (data.ok) {
+        initPage();
+      }
+    });
   }
 
+  
   function createPanel(article) {
     var panel = $(
       [
@@ -91,22 +112,7 @@ $(document).ready(function() {
     return panel;
   }
 
-  function handleArticleSave() {
-    let articleToSave = $(this)
-      .parents(".panel")
-      .data();
-    articleToSave.saved = true;
-
-    $.ajax({
-      method: "PATCH",
-      url: "/api/headlines",
-      data: articleToSave
-    }).then(function(data) {
-      if (data.ok) {
-        initPage();
-      }
-    });
-  }
+  
   function handleArticleScrape() {
     $.get("/api/fetch").then(function(data) {
       initPage();

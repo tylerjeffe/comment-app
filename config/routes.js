@@ -4,11 +4,9 @@ let headlinesController = require("../controllers/headlines");
 let notesController = require("../controllers/notes");
 
 module.exports = function(router) {
-  // route for rendering the handlebars homepage
   router.get("/", function(req, res) {
     res.render("home.handlebars");
   });
-  // renders the saved.handlebars page
   router.get("/saved", function(req, res) {
     res.render("saved.handlebars");
   });

@@ -4,7 +4,7 @@ html {
 
 body {
     margin-bottom: 80px;
-   
+    background: rgba(144, 238, 144, 0.527);
 }
 
 .jumbotron {
@@ -16,4 +16,5 @@ body {
 }
 
 .navbar{
+    background: lightyellow;
 }
